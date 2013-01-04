@@ -17,4 +17,10 @@ program being isolated from all OS-dependent functions.
 
 Since c41 is freestanding (no libs imported - except in some cases for what
 the compiler enforces) the goal is to have it compiled for all environments
-(all Unix-like systems, MS Windows as user-mode and kernel-mode library).
+(all Unix-like systems, MS Windows etc. as user-mode and kernel-mode library).
+
+
+Licence: ISC (Internet Systems Consortium)
+
+ISC licence is equivalent to Simplified BSD Licence but with simpler wording.
+
