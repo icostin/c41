@@ -23,7 +23,7 @@
 #define C41_MEM_COMPARE(_a, _b, _l) \
   (c41_u8a_compare((uint8_t const *) (_a), (uint8_t const *) (_b), (_l)))
 #define C41_MEM_SCAN(_s, _l, _v) (c41_u8a_scan((_s), (_l), (_v)))
-#define C41_STR_LEN(_s) (c41_u8a_scan_nolim((uint8_t const *) (_s), 0))
+#define C41_STR_LEN(_s) (c41_u8a_scan_ofs_nolim((uint8_t const *) (_s), 0))
 #define C41_STR_COMPARE(_a, _b) \
   (c41_u8s_compare((uint8_t const *) (_a), (uint8_t const *) (_b)))
 #endif
@@ -81,6 +81,13 @@ C41_API int C41_CALL c41_u8s_compare
 
 /* c41_u8a_scan_nolim *******************************************************/
 C41_API void * C41_CALL c41_u8a_scan_nolim
+(
+  uint8_t const * s,
+  uint8_t v
+);
+
+/* c41_u8a_scan_ofs_nolim ***************************************************/
+C41_API size_t C41_CALL c41_u8a_scan_ofs_nolim
 (
   uint8_t const * s,
   uint8_t v

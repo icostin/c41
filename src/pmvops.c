@@ -111,6 +111,17 @@ C41_API void * C41_CALL c41_u8a_scan_nolim
   return (void *) s;
 }
 
+/* c41_u8a_scan_ofs_nolim ***************************************************/
+C41_API size_t C41_CALL c41_u8a_scan_ofs_nolim
+(
+  uint8_t const * s,
+  uint8_t v
+)
+{
+  return (size_t) ((uint8_t const *) c41_u8a_scan_nolim(s, v) - s);
+}
+
+
 /* c41_u8a_scan *************************************************************/
 C41_API void * C41_CALL c41_u8a_scan
 (
