@@ -122,6 +122,15 @@ C41_API uint_t C41_CALL c41_io_seek64
   int           anchor
 );
 
+/* c41_io_size **************************************************************
+ * seeks to end and back to current position, updating io_p->size with
+ * current file size.
+ */
+C41_API uint_t C41_CALL c41_io_get_size
+(
+  c41_io_t *    io_p
+);
+
 /* c41_io_truncate **********************************************************/
 C41_API uint_t C41_CALL c41_io_truncate (c41_io_t * io_p);
 
