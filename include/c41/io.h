@@ -149,5 +149,24 @@ C41_API size_t C41_CALL c41_io_str_writer
 /* c41_io_fmt ***************************************************************/
 C41_API ssize_t C41_CALL c41_io_fmt (c41_io_t * io_p, char const * fmt, ...);
 
+/* c41_io_p64read ***********************************************************
+ * seeks to given position and reads; seek & read are NOT done atomically
+ * will modify the current position
+ * tries to read len bytes at a certain position (looping if interrupted by signals)
+ * used_size_p can be NULL
+ * returns:
+ *  0           len bytes read
+ *  C41_IO_EOF  less than len bytes read
+ *  other       some I/O error
+ */
+C41_API uint_t C41_CALL c41_io_p64read
+(
+  c41_io_t *    io_p,
+  void *        data,
+  int64_t       pos,
+  size_t        len,
+  size_t *      used_size_p
+);
+
 #endif /* _C41_IO_H_ */
 

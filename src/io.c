@@ -1,5 +1,6 @@
 /* [c41] Byte I/O streams - functions
  * Changelog:
+ *  - 2013/01/17 Costin Ionescu: added c41_io_p64read()
  *  - 2013/01/04 Costin Ionescu: initial commit
  */
 
@@ -211,5 +212,34 @@ C41_API uint_t C41_CALL c41_io_get_size
   c = c41_io_seek64(io_p, 0, C41_IO_END); // this updates io_p->size
   if (c) return c;
   return c41_io_seek64(io_p, pos, C41_IO_BEGIN);
+}
+
+/* c41_io_p64read ***********************************************************/
+C41_API uint_t C41_CALL c41_io_p64read
+(
+  c41_io_t *    io_p,
+  void *        data,
+  int64_t       pos,
+  size_t        len,
+  size_t *      used_size_p
+)
+{
+  uint_t c;
+  uint8_t * d;
+  uint8_t * e;
+  size_t rlen;
+  c = c41_io_seek64(io_p, pos, C41_IO_BEGIN);
+  if (c) { if (used_size_p) *used_size_p = 0; return c; }
+  
+  for (d = data, e = d + len; d < e; )
+  {
+    c = c41_io_read(io_p, d, e - d, &rlen);
+    if (!rlen) { c = C41_IO_EOF; break; }
+    d += rlen;
+    if (c && c != C41_IO_SIGNAL) break;
+  }
+  if (used_size_p) *used_size_p = d - (uint8_t *) data;
+
+  return c;
 }
 
