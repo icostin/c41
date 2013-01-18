@@ -1,5 +1,6 @@
 /* [c41] Strings - functions
  * Changelog:
+ *  - 2013/01/18 Costin Ionescu: fixed formatting 8/16/32 unsigned ints with high bit set
  *  - 2013/01/04 Costin Ionescu: initial commit
  */
 
@@ -567,6 +568,7 @@ C41_API int c41_write_vfmt
         if (!ifmt.radix) ifmt.radix = 16;
         if (ifmt.radix == 16 && !ifmt.min_digit_count)
           ifmt.min_digit_count = 2;
+        if (ifmt.sign_mode == 2) i64 &= 0xFF;
         break;
       case 'w':
         cmd = 'i';
@@ -574,6 +576,7 @@ C41_API int c41_write_vfmt
         if (!ifmt.radix) ifmt.radix = 16;
         if (ifmt.radix == 16 && !ifmt.min_digit_count)
           ifmt.min_digit_count = 4;
+        if (ifmt.sign_mode == 2) i64 &= 0xFFFF;
         break;
       case 'd':
         cmd = 'i';
@@ -581,6 +584,7 @@ C41_API int c41_write_vfmt
         if (!ifmt.radix) ifmt.radix = 16;
         if (ifmt.radix == 16 && !ifmt.min_digit_count)
           ifmt.min_digit_count = 8;
+        if (ifmt.sign_mode == 2) i64 &= 0xFFFFFFFF;
         break;
       case 'q':
         cmd = 'i';
