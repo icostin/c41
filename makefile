@@ -36,7 +36,7 @@ libs: dlib slib
 tests: sltest dltest
 
 arc:
-	cd .. && tar -Jcvf $(N).txz $(N)/src $(N)/include $(N)/make* $(N)/*.txt
+	cd .. && tar -Jcvf $(N).txz $(N)/src $(N)/include $(N)/make* $(N)/README* $(N)/LICENCE
 
 install: libs tests
 	mkdir -p $(PREFIX_DIR)/lib

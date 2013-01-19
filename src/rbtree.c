@@ -42,8 +42,8 @@ C41_API int C41_CALL c41_rbtree_find
   {
     path_p->nodes[++i] = n;
     cr = cmp(key, n + 1, ctx);
-    path_p->sides[i] = cr;
     if (cr < 0) { path_p->last = i; return -1; }
+    path_p->sides[i] = (uint8_t) cr;
     if (cr == C41_RBTREE_EQUAL) { path_p->last = i; return 0; }
     n = n->links[cr];
   }
@@ -169,7 +169,7 @@ C41_API void C41_CALL c41_rbtree_delete
   if (o->left && o->right)
   {
     ds = path_p->sides[od - 1];
-    d = c41_rbtree_np(path_p, ds);
+    d = c41_rbtree_np(path_p, (uint8_t) ds);
     // now must delete d which has at most 1 non-null child
     dd = path_p->last;
     tmp = *o;
