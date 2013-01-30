@@ -1,5 +1,8 @@
 /* [c41] Strings - functions
  * Changelog:
+ *  - 2013/01/30 Costin Ionescu: 
+ *    - c41_utf8_char_encode_raw()
+ *    - added "$c" formatting
  *  - 2013/01/18 Costin Ionescu: fixed formatting 8/16/32 unsigned ints with high bit set
  *  - 2013/01/04 Costin Ionescu: initial commit
  */
@@ -177,6 +180,60 @@ C41_API int C41_CALL c41_utf8_char_decode_strict
   if (l >= 0x110000) return -9;
   if ((l & 0xFFF800) == 0x00D800) return -10;
   return l;
+}
+
+/* c41_utf8_char_encode_raw *************************************************/
+C41_API uint_t C41_CALL c41_utf8_char_encode_raw
+(
+  void * out,
+  uint32_t cp
+)
+{
+  uint8_t * o = out;
+
+  if (cp < 0x80)
+  {
+    o[0] = (uint8_t) cp;
+    return 1;
+  }
+  if (cp < 0x800)
+  {
+    o[0] = 0xC0 | (uint8_t) (cp >> 6);
+    o[1] = 0x80 | (uint8_t) (cp & 0x3F);
+    return 2;
+  }
+  if (cp < 0x10000)
+  {
+    o[0] = 0xE0 | (uint8_t) (cp >> 12);
+    o[1] = 0x80 | (uint8_t) ((cp >> 6) & 0x3F);
+    o[2] = 0x80 | (uint8_t) (cp & 0x3F);
+    return 3;
+  }
+  if (cp < (1 << 21))
+  {
+    o[0] = 0xF0 | (uint8_t) (cp >> 18);
+    o[1] = 0x80 | (uint8_t) ((cp >> 12) & 0x3F);
+    o[2] = 0x80 | (uint8_t) ((cp >> 6) & 0x3F);
+    o[3] = 0x80 | (uint8_t) (cp & 0x3F);
+    return 4;
+  }
+  if (cp < (1 << 26))
+  {
+    o[0] = 0xF8 | (uint8_t) (cp >> 24);
+    o[1] = 0x80 | (uint8_t) ((cp >> 18) & 0x3F);
+    o[2] = 0x80 | (uint8_t) ((cp >> 12) & 0x3F);
+    o[3] = 0x80 | (uint8_t) ((cp >> 6) & 0x3F);
+    o[4] = 0x80 | (uint8_t) (cp & 0x3F);
+    return 5;
+  }
+
+  o[0] = 0xFC | (uint8_t) (cp >> 30);
+  o[1] = 0x80 | (uint8_t) ((cp >> 24) & 0x3F);
+  o[2] = 0x80 | (uint8_t) ((cp >> 18) & 0x3F);
+  o[3] = 0x80 | (uint8_t) ((cp >> 12) & 0x3F);
+  o[4] = 0x80 | (uint8_t) ((cp >> 6) & 0x3F);
+  o[5] = 0x80 | (uint8_t) (cp & 0x3F);
+  return 6;
 }
 
 /* c41_mutf8_str_decode *****************************************************/
@@ -476,6 +533,7 @@ C41_API int c41_write_vfmt
   c41_int_fmt_t ifmt;
   char tb[0x400];
   int i, rv;
+  uint32_t cp;
 
   (void) width_func;
   (void) width_ctx;
@@ -496,7 +554,7 @@ C41_API int c41_write_vfmt
     prec = -1;
     pfx = cmd = 0;
     wlen = 0; wbuf = NULL;
-    i64 = 0;
+    i64 = 0; cp = 0;
     C41_VAR_ZERO(ifmt);
     for (; !cmd;)
     {
@@ -561,6 +619,10 @@ C41_API int c41_write_vfmt
         break;
       case '#':
         pfx = 1;
+        break;
+      case 'c':
+        cmd = 'c';
+        cp = (uint32_t) va_arg(va, int);
         break;
       case 'b':
         cmd = 'i';
@@ -670,6 +732,11 @@ C41_API int c41_write_vfmt
       wlen = c41_int64_fmt(tb, i64, &ifmt);
       wbuf = (uint8_t *) tb;
       // wlen = C41_STR_LEN(wbuf);
+      break;
+    case 'c':
+      wbuf = (uint8_t *) tb;
+      if (cp < 0x80) { tb[0] = (uint8_t) cp; wlen = 1; }
+      else { wlen = c41_utf8_char_encode_raw(tb, cp); } //tb[0] = '?'; wlen = 1; }
       break;
     case 's':
       break;

@@ -1,5 +1,6 @@
 /* [c41] Strings - header file
  * Changelog:
+ *  - 2013/01/30 Costin Ionescu: added c41_utf8_char_encode_raw()
  *  - 2013/01/04 Costin Ionescu: initial commit
  */
 
@@ -69,6 +70,16 @@ C41_API int C41_CALL c41_utf8_char_decode_strict
  *  -9  invalid code point (> 0x110000)
  *  -10 surrogate code point; encoded length for these code points is 3
  */
+
+/* c41_utf8_char_encode_raw *************************************************/
+/* encodes a given code point into buffer out; the buffer must have at least
+ * c41_utf8_char_len(cp) bytes available.
+ */
+C41_API uint_t C41_CALL c41_utf8_char_encode_raw
+(
+  void * out,
+  uint32_t cp
+);
 
 /* c41_mutf8_str_decode *****************************************************/
 C41_API int C41_CALL c41_mutf8_str_decode
@@ -202,6 +213,7 @@ C41_API ssize_t C41_CALL c41_str_width_blind
 
 /* c41_utf8_str_measure *****************************************************/
 /* measures the 'width' of a string
+ * most likely you want wf = c41_term_char_width_wctx and wf_ctx = NULL
  * returns:
  *  0   all b bytes were parsed successfully
  *  1   reached code-point limit c with no errors

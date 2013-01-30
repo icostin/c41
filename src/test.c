@@ -100,7 +100,6 @@ int utf8_test ()
   return 0;
 }
 
-
 typedef struct rbt0_s rbt0_t;
 struct rbt0_s
 {
