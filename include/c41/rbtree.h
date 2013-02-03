@@ -9,12 +9,15 @@
 #define C41_RBTREE_MAX_DEPTH    0x40
 
 #define C41_RBTREE_LEFT 0
+#define C41_RBTREE_SMALLER 0
 #define C41_RBTREE_RIGHT 1
+#define C41_RBTREE_GREATER 1
 #define C41_RBTREE_EQUAL 2
 #define C41_RBTREE_ERROR -1
 
 
-typedef uint_t (C41_CALL * c41_rbtree_cmp_f) (void * key, void * node_payload, void * context);
+typedef uint_t (C41_CALL * c41_rbtree_cmp_f) (void * key, void * node_payload, 
+                                              void * context);
 
 typedef struct c41_rbtree_node_s c41_rbtree_node_t;
 struct c41_rbtree_node_s

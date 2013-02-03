@@ -47,14 +47,36 @@ typedef struct c41_fsi_s c41_fsi_t;
 struct c41_fsi_s
 {
   void * context;
-  uint_t (C41_CALL * file_open) 
+
+  ssize_t (C41_CALL * utf8_to_fsi_name)
     (
-      c41_io_t * *              io_pp, 
+      uint8_t *                 fsi_path_a,
+      size_t                    fsi_path_n,
+      uint8_t const *           utf8_a,
+      size_t                    utf8_n
+    );
+  // returns number of bytes needed to store fsi_path
+  // negative values mean path is invalid or could not compute
+
+  ssize_t (C41_CALL * utf8esc_to_fsi_name)
+    (
+      uint8_t *                 fsi_path_a,
+      size_t                    fsi_path_n,
+      uint8_t const *           utf8_a,
+      size_t                    utf8_n
+    );
+  // returns number of bytes needed to store fsi_path
+  // negative values mean path is invalid or could not compute
+
+  uint_t (C41_CALL * file_open)
+    (
+      c41_io_t * *              io_pp,
       uint8_t const *           path_a,
       size_t                    path_n,
       uint32_t                  mode,
       void *                    context
     );
+
   uint_t (C41_CALL * file_destroy)
     (
       c41_io_t *                io_p,
@@ -72,11 +94,11 @@ struct c41_fsi_s
 C41_API char const * c41_fsi_status_name (uint_t sc);
 
 /* c41_file_open ************************************************************/
-C41_API uint_t C41_CALL c41_file_open 
+C41_API uint_t C41_CALL c41_file_open
 (
   c41_fsi_t *                   fsi_p,
-  c41_io_t * *                  io_pp, 
-  uint8_t const *               path_a, 
+  c41_io_t * *                  io_pp,
+  uint8_t const *               path_a,
   size_t                        path_n,
   uint32_t                      mode
 );

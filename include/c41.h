@@ -25,6 +25,7 @@
 #include "c41/ilc.h"
 #include "c41/fsi.h"
 #include "c41/cli.h"
+#include "c41/dlist.h"
 #include "c41/rbtree.h"
 
 #endif /* _C41_H_ */

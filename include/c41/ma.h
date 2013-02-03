@@ -1,5 +1,7 @@
 /* [c41] Memory Allocation interface - header file
  * Changelog:
+ *  - 2013/02/03 Costin Ionescu: 
+ *    - modified array allocs to use at most C41_SSIZE_MAX bytes
  *  - 2013/01/04 Costin Ionescu: initial commit
  */
 
@@ -93,11 +95,10 @@ static __inline c41_uint_t c41_ma_realloc_array
   size_t old_count
 )
 {
-  size_t new_size = item_size * new_count;
   c41_uint_t sc;
   if (new_count == old_count) return 0;
-  if (new_size / item_size != new_count) return C41_MA_LEN_OVERFLOW;
-  sc = c41_ma_realloc(ma_p, dptr_p, new_size, item_size * old_count);
+  if (new_count > C41_SSIZE_MAX / item_size) return C41_MA_LEN_OVERFLOW;
+  sc = c41_ma_realloc(ma_p, dptr_p, item_size * new_count, item_size * old_count);
   return sc;
 }
 
@@ -110,11 +111,11 @@ static __inline c41_uint_t c41_ma_realloc_array_zero_fill
   size_t old_count
 )
 {
-  size_t new_size = item_size * new_count;
   c41_uint_t sc;
   if (new_count == old_count) return 0;
-  if (new_size / item_size != new_count) return C41_MA_LEN_OVERFLOW;
-  sc = c41_ma_realloc_zero_fill(ma_p, dptr_p, new_size, item_size * old_count);
+  if (new_count > C41_SSIZE_MAX / item_size) return C41_MA_LEN_OVERFLOW;
+  sc = c41_ma_realloc_zero_fill(ma_p, dptr_p, item_size * new_count, 
+                                item_size * old_count);
   return sc;
 }
 
