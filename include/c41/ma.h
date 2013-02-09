@@ -152,7 +152,7 @@ struct c41_ma_counter_s
   c41_ma_t const * worker_ma_p;
   size_t count; // number of blocks allocated
   size_t total_size; // sum of sizes of allocated blocks
-  size_t total_limit; // size limit (deny allocs raising size_n above this limit)
+  size_t total_limit; // size limit (deny allocs raising total_size above this limit)
   size_t block_limit; // size limit per 1 block (do not alloc blocks larger than this)
   size_t count_limit; // limit for number of blocks
 };

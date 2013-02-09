@@ -37,10 +37,10 @@ static __inline void c41_dlist_ins (c41_np_t * anchor_p, c41_np_t * to_ins_p, in
 }
 
 #define C41_DLIST_APPEND(_list, _obj_p, _np_field) \
-  (c41_dlist_ins(&(_list), &(_obj)->_np_field, C41_PREV))
+  (c41_dlist_ins(&(_list), &(_obj_p)->_np_field, C41_PREV))
 
 #define C41_DLIST_PREPEND(_list, _obj_p, _np_field) \
-  (c41_dlist_ins(&(_list), &(_obj)->_np_field, C41_NEXT))
+  (c41_dlist_ins(&(_list), &(_obj_p)->_np_field, C41_NEXT))
 
 #endif /* _C41_DLIST_H_ */
 

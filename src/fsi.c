@@ -17,6 +17,7 @@ C41_API char const * c41_fsi_status_name (uint_t sc)
     C41_CASE_RET_STR(C41_FSI_BAD_PATH        );
     C41_CASE_RET_STR(C41_FSI_OPEN_FAILED     );
     C41_CASE_RET_STR(C41_FSI_NO_RES          );
+    C41_CASE_RET_STR(C41_FSI_NO_CODE         );
     //C41_CASE_RET_STR();
   }
   return "C41_FSI_UNKNOWN_ERROR";

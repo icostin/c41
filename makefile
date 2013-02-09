@@ -17,7 +17,7 @@ ifeq ($(PREFIX_DIR),)
 PREFIX_DIR:=$(HOME)/.local
 endif
 
-src_list := src/misc.c src/ma.c src/pmvops.c src/str.c src/io.c src/fsi.c src/ilc.c src/ucw8.c src/rbtree.c
+src_list := src/misc.c src/ma.c src/pmvops.c src/str.c src/io.c src/fsi.c src/fsp.c src/ilc.c src/ucw8.c src/rbtree.c
 hdr_list := $(wildcard include/*.h) $(wildcard include/$(N)/*.h)
 sl_obj_list := $(patsubst src/%.c,out/sl/%.o,$(src_list))
 dl_obj_list := $(patsubst src/%.c,out/dl/%.o,$(src_list))

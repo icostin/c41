@@ -111,6 +111,23 @@ C41_API int C41_CALL c41_mutf8_str_decode
  * on error (ret val < 0) *in_len_p is set to position where error occurs
  **/
 
+
+/* c41_utf16_len_from_utf8 **************************************************/
+C41_API ssize_t C41_CALL c41_utf16_len_from_utf8
+(
+  uint8_t const * in_a,
+  size_t in_n, 
+  size_t * err_pos_p // can be NULL 
+);
+
+/* c41_utf16_from_utf8 ******************************************************/
+C41_API size_t C41_CALL c41_utf16_from_utf8
+(
+  uint16_t * out_a,
+  uint8_t const * in_a,
+  size_t in_n
+);
+
 /* c41_term_char_width ******************************************************/
 C41_API int C41_CALL c41_term_char_width (uint32_t cp);
 /* cp must be a valid code-point (< 0x110000)

@@ -294,6 +294,64 @@ l_exitio:
   goto l_exito;
 }
 
+/* c41_utf16_len_from_utf8 **************************************************/
+C41_API ssize_t C41_CALL c41_utf16_len_from_utf8
+(
+  uint8_t const * in_a,
+  size_t in_n, 
+  size_t * err_pos_p
+)
+{
+  uint8_t const * d;
+  uint8_t const * e;
+  ssize_t n;
+  int l;
+  uint32_t cp;
+
+  for (d = in_a, e = in_a + in_n, n = 0; d < e; d += l)
+  {
+    l = (cp = *d) < 0x80 ? 1 : c41_utf8_char_decode_strict(in_a, e - d, &cp);
+    if (l < 0) 
+    {
+      if (err_pos_p) *err_pos_p = d - in_a;
+      return l;
+    }
+    n += 1 + (cp >= 0x10000);
+  }
+  return n;
+}
+
+/* c41_utf16_from_utf8 ******************************************************/
+C41_API size_t C41_CALL c41_utf16_from_utf8
+(
+  uint16_t * out_a,
+  uint8_t const * in_a,
+  size_t in_n
+)
+{
+  uint8_t const * d;
+  uint8_t const * e;
+  int l;
+  uint32_t cp;
+  uint16_t * o;
+
+  for (d = in_a, e = in_a + in_n, o = out_a; d < e; d += l)
+  {
+    l = (cp = *d) < 0x80 ? 1 : c41_utf8_char_decode_strict(in_a, e - d, &cp);
+    if (cp < 0x10000)
+    {
+      *o++ = (uint16_t) *d;
+    }
+    else
+    {
+      cp -= 0x10000;
+      *o++ = 0xD800 | (cp >> 12);
+      *o++ = 0xDC00 | (cp & 0x7FF);
+    }
+  }
+  return o - out_a;
+}
+
 /* c41_term_char_width ******************************************************/
 C41_API int C41_CALL c41_term_char_width (uint32_t cp)
 {

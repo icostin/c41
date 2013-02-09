@@ -16,6 +16,7 @@
 #define C41_FSI_BAD_PATH        0x04 // path name invalid
 #define C41_FSI_OPEN_FAILED     0x05 // generic error when open fails
 #define C41_FSI_NO_RES          0x06
+#define C41_FSI_NO_CODE         0xFE
 
 /* open mode flags */
 #define C41_FSI_EXF_MASK        0x0003
@@ -44,29 +45,10 @@
 #define C41_FSI_OX              (1 << (C41_FSI_PERM_SHIFT + 0))
 
 typedef struct c41_fsi_s c41_fsi_t;
+
 struct c41_fsi_s
 {
   void * context;
-
-  ssize_t (C41_CALL * utf8_to_fsi_name)
-    (
-      uint8_t *                 fsi_path_a,
-      size_t                    fsi_path_n,
-      uint8_t const *           utf8_a,
-      size_t                    utf8_n
-    );
-  // returns number of bytes needed to store fsi_path
-  // negative values mean path is invalid or could not compute
-
-  ssize_t (C41_CALL * utf8esc_to_fsi_name)
-    (
-      uint8_t *                 fsi_path_a,
-      size_t                    fsi_path_n,
-      uint8_t const *           utf8_a,
-      size_t                    utf8_n
-    );
-  // returns number of bytes needed to store fsi_path
-  // negative values mean path is invalid or could not compute
 
   uint_t (C41_CALL * file_open)
     (
@@ -82,6 +64,13 @@ struct c41_fsi_s
       c41_io_t *                io_p,
       void *                    context
     );
+
+  uint_t (C41_CALL * dir_current_get)
+    (
+      uint8_t *                 path_a,
+      size_t                    path_max_len
+    );
+
   /* TODO:
    * dir_enum_start, dir_enum_next, dir_enum_finish
    * dir_create, dir_delete,
