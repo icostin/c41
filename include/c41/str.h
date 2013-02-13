@@ -26,6 +26,8 @@ C41_API void * C41_CALL c41_hex (void * out, void const * in, size_t len);
 C41_API void * C41_CALL c41_hexz (void * out, void const * in, size_t len);
 /* out buffer must contain at least 2 * len + 1 bytes */
 
+C41_API void * C41_CALL c41_hex16sz (void * out, uint16_t const * in, size_t len);
+/* out: "1234 5678 9ABC\0"; out must have len * 5 bytes available */
 
 C41_API size_t C41_CALL c41_unhex (void * out, void const * in, size_t len);
 /* len is the number of bytes to decode, not the number of bytes in input

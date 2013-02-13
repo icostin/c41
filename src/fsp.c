@@ -1,3 +1,7 @@
+/* [c41] File System Path - header file
+ * Changelog:
+ *  - 2013/02/13 Costin Ionescu: initial commit, partial implementation
+ */
 #include <c41.h>
 
 /* mswin_fsp_from_utf8 ******************************************************/
@@ -13,11 +17,13 @@ static ssize_t C41_CALL mswin_fsp_from_utf8
 
   n = c41_utf16_len_from_utf8(utf8_a, utf8_n, NULL);
   if (n < 0) return C41_FSI_BAD_PATH;
-  if ((size_t) (n + n) <= fsp_n)
+  if ((size_t) (n + n + 2) <= fsp_n)
   {
     c41_utf16_from_utf8((uint16_t *) fsp_a, utf8_a, utf8_n);
+    fsp_a[n + n] = 0;
+    fsp_a[n + n + 1] = 0;
   }
-  return (size_t) (n + n);
+  return (size_t) (n + n + 2);
 }
 
 /* mswin_fsp_from_utf8ice ***************************************************/

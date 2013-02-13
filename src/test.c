@@ -49,8 +49,10 @@ int hex_test ()
 {
   char buf[0x40];
   size_t l;
+  uint16_t u16a[] = { 0x1234, 0xABCD };
 
   C(!strcmp(c41_hexz(buf, "\xAB\xCD", 2), "ABCD"));
+  C(!strcmp(c41_hex16sz(buf, u16a, 2), "1234 ABCD"));
 
   memset(buf, 0, sizeof(buf));
   l = c41_unhex(buf, "4E4f70715-", 5);
@@ -197,6 +199,33 @@ int rbtree_test ()
   return 0;
 }
 
+int fsp_test ()
+{
+  c41_fspi_t fspi;
+  uint8_t buf[0x100];
+  ssize_t z;
+
+  c41_fsp_mswin(&fspi);
+  z = fspi.fsp_from_utf8(buf, 8, (uint8_t *) "caca", 4);
+  C(z == 10);
+  z = fspi.fsp_from_utf8(buf, 10, (uint8_t *) "caca", 4);
+  C(z == 10 && !memcmp(buf, "c\0a\0c\0a\0\0\0", 10));
+
+  z = fspi.fsp_from_utf8(buf, 2, (uint8_t *) "\xEF\xBB\xBF", 2);
+  C(z == C41_FSI_BAD_PATH);
+
+  z = fspi.fsp_from_utf8(buf, 4, (uint8_t *) "\xEF\xBB\xBF", 3);
+  C(z == 4);
+
+  z = fspi.fsp_from_utf8(buf, 6, (uint8_t *) "\xF4\x8F\xBF\xBF", 3);
+  C(z == C41_FSI_BAD_PATH);
+
+  z = fspi.fsp_from_utf8(buf, 8, (uint8_t *) "\xF4\x8F\xBF\xBF", 4);
+  C(z == 6);
+
+  return 0;
+}
+
 int main (int argc, char const * const * argv)
 {
   C(C41_LIB_IS_COMPATIBLE());
@@ -218,7 +247,8 @@ int main (int argc, char const * const * argv)
   C(c41_term_char_width(0xAD) == -1);
   C(c41_term_char_width(0x2329) == 2);
   C(c41_term_char_width(0x1F773) == 1);
-  C(!rbtree_test());
+  C(!rbtree_test()); printf("- rbtree test passed\n");
+  C(!fsp_test()); printf("- fsp test passed\n");
 
   return 0;
 }

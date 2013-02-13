@@ -1,3 +1,12 @@
+/* [c41] File System Path - header file
+ * This provides an interface to convert utf8 strings or some escaped utf8 form into the
+ * native representation used by a fsi interface.
+ * The escape form should be able to generate any file path valid even if there is no utf8
+ * equivalent
+ * Changelog:
+ *  - 2013/02/13 Costin Ionescu: initial commit
+ */
+
 #ifndef _C41_FSP_H_
 #define _C41_FSP_H_
 

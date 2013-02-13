@@ -1,5 +1,8 @@
 /* [c41] Strings - functions
  * Changelog:
+ *  - 2013/02/13 Costin Ionescu:
+ *    - c41_utf16_from_utf8()
+ *    - c41_utf16_len_from_utf8()
  *  - 2013/01/30 Costin Ionescu: 
  *    - c41_utf8_char_encode_raw()
  *    - added "$c" formatting
@@ -41,6 +44,23 @@ C41_API void * C41_CALL c41_hexz (void * out, void const * in, size_t len)
     *o++ = c41_digits[*i & 0x0F];
   }
   *o = 0;
+  return out;
+}
+
+/* c41_hex16sz **************************************************************/
+C41_API void * C41_CALL c41_hex16sz (void * out, uint16_t const * in, size_t len)
+{
+  uint8_t * o = out;
+  uint16_t const * ie = in + len;
+  for (; in < ie; ++in)
+  {
+    *o++ = c41_digits[(*in >> 12)];
+    *o++ = c41_digits[(*in >> 8) & 0x0F];
+    *o++ = c41_digits[(*in >> 4) & 0x0F];
+    *o++ = c41_digits[(*in     ) & 0x0F];
+    *o++ = ' ';
+  }
+  o[-1] = 0;
   return out;
 }
 
