@@ -64,7 +64,10 @@ static ssize_t C41_CALL unix_fsp_from_utf8
   (void) fsp_n;
   (void) utf8_a;
   (void) utf8_n;
-  return -C41_FSI_NO_CODE;
+  if (fsp_n < utf8_n + 1) return utf8_n + 1;
+  C41_MEM_COPY(fsp_a, utf8_a, utf8_n);
+  fsp_a[utf8_n] = 0;
+  return utf8_n + 1;
 }
 
 /* unix_fsp_from_utf8ice ****************************************************/

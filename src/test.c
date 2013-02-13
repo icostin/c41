@@ -223,6 +223,12 @@ int fsp_test ()
   z = fspi.fsp_from_utf8(buf, 8, (uint8_t *) "\xF4\x8F\xBF\xBF", 4);
   C(z == 6);
 
+  c41_fsp_unix(&fspi);
+  z = fspi.fsp_from_utf8(buf, 4, (uint8_t *) "caca", 4);
+  C(z == 5);
+  z = fspi.fsp_from_utf8(buf, 5, (uint8_t *) "caca", 4);
+  C(z == 5);
+
   return 0;
 }
 
