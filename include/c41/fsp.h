@@ -36,6 +36,22 @@ struct c41_fspi_s
       size_t                    utf8ice_n
     );
 
+  ssize_t (C41_CALL * utf8_from_fsp)
+    (
+      uint8_t *                 utf8_a,
+      size_t                    utf8_n,
+      uint8_t const *           fsp_a,
+      size_t                    fsp_n
+    );
+
+  ssize_t (C41_CALL * utf8ice_from_fsp)
+    (
+      uint8_t *                 utf8ice_a,
+      size_t                    utf8ice_n,
+      uint8_t const *           fsp_a,
+      size_t                    fsp_n
+    );
+
   char sep, alt_sep;
 };
 

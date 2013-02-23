@@ -42,11 +42,45 @@ static ssize_t C41_CALL mswin_fsp_from_utf8ice
   return -C41_FSI_NO_CODE;
 }
 
+/* mswin_utf8_from_fsp ******************************************************/
+static ssize_t C41_CALL mswin_utf8_from_fsp
+(
+  uint8_t *                 fsp_a,
+  size_t                    fsp_n,
+  uint8_t const *           utf8_a,
+  size_t                    utf8_n
+)
+{
+  (void) fsp_a;
+  (void) fsp_n;
+  (void) utf8_a;
+  (void) utf8_n;
+  return -C41_FSI_NO_CODE;
+}
+
+/* mswin_utf8ice_from_fsp ***************************************************/
+static ssize_t C41_CALL mswin_utf8ice_from_fsp
+(
+  uint8_t *                 fsp_a,
+  size_t                    fsp_n,
+  uint8_t const *           utf8ice_a,
+  size_t                    utf8ice_n
+)
+{
+  (void) fsp_a;
+  (void) fsp_n;
+  (void) utf8ice_a;
+  (void) utf8ice_n;
+  return -C41_FSI_NO_CODE;
+}
+
 /* c41_fsp_mswin ************************************************************/
 C41_API void C41_CALL c41_fsp_mswin (c41_fspi_t * fspi_p)
 {
   fspi_p->fsp_from_utf8 = mswin_fsp_from_utf8;
   fspi_p->fsp_from_utf8ice = mswin_fsp_from_utf8ice;
+  fspi_p->utf8_from_fsp = mswin_utf8_from_fsp;
+  fspi_p->utf8ice_from_fsp = mswin_utf8ice_from_fsp;
   fspi_p->sep = '\\';
   fspi_p->alt_sep = '/';
 }
@@ -86,11 +120,45 @@ static ssize_t C41_CALL unix_fsp_from_utf8ice
   return -C41_FSI_NO_CODE;
 }
 
+/* unix_utf8_from_fsp ******************************************************/
+static ssize_t C41_CALL unix_utf8_from_fsp
+(
+  uint8_t *                 fsp_a,
+  size_t                    fsp_n,
+  uint8_t const *           utf8_a,
+  size_t                    utf8_n
+)
+{
+  (void) fsp_a;
+  (void) fsp_n;
+  (void) utf8_a;
+  (void) utf8_n;
+  return -C41_FSI_NO_CODE;
+}
+
+/* unix_utf8ice_from_fsp ***************************************************/
+static ssize_t C41_CALL unix_utf8ice_from_fsp
+(
+  uint8_t *                 fsp_a,
+  size_t                    fsp_n,
+  uint8_t const *           utf8ice_a,
+  size_t                    utf8ice_n
+)
+{
+  (void) fsp_a;
+  (void) fsp_n;
+  (void) utf8ice_a;
+  (void) utf8ice_n;
+  return -C41_FSI_NO_CODE;
+}
+
 /* c41_fsp_unix *************************************************************/
 C41_API void C41_CALL c41_fsp_unix (c41_fspi_t * fspi_p)
 {
   fspi_p->fsp_from_utf8 = unix_fsp_from_utf8;
   fspi_p->fsp_from_utf8ice = unix_fsp_from_utf8ice;
+  fspi_p->utf8_from_fsp = unix_utf8_from_fsp;
+  fspi_p->utf8ice_from_fsp = unix_utf8ice_from_fsp;
   fspi_p->sep = '/';
   fspi_p->alt_sep = '/';
 }
