@@ -365,8 +365,8 @@ C41_API size_t C41_CALL c41_utf16_from_utf8
     else
     {
       cp -= 0x10000;
-      *o++ = 0xD800 | (cp >> 12);
-      *o++ = 0xDC00 | (cp & 0x7FF);
+      *o++ = (uint16_t) (0xD800 | (cp >> 12));
+      *o++ = (uint16_t) (0xDC00 | (cp & 0x7FF));
     }
   }
   return o - out_a;
