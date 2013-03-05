@@ -164,6 +164,10 @@ typedef unsigned long int ulong_t;
 #define C41_FIELD_OFS(_type, _field) ((intptr_t) &((_type *) NULL)->_field)
 #define C41_OBJ_FIELD_OFS(_obj_p, _field) C41_PTR_DIFF(&(_obj_p)->_field, (_obj_p))
 
+#define C41_FIELD_TO_OBJECT(_obj_type, _field_name, _field_ptr) \
+  ((_obj_type *) C41_PTR_OFS((_field_ptr), \
+                             (-C41_FIELD_OFS(_obj_type, _field_name))))
+
 #define C41_ITEM_COUNT(_a) (sizeof(_a) / sizeof((_a)[0]))
 
 #define C41_RU8(_p) (*((uint8_t const *) (_p)))
