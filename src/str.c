@@ -814,7 +814,7 @@ C41_API int c41_write_vfmt
     case 'c':
       wbuf = (uint8_t *) tb;
       if (cp < 0x80) { tb[0] = (uint8_t) cp; wlen = 1; }
-      else { wlen = c41_utf8_char_encode_raw(tb, cp); } //tb[0] = '?'; wlen = 1; }
+      else { wlen = c41_utf8_char_encode_raw(tb, cp); } //tb[0] = '?'; wlen = 1; 
       break;
     case 's':
       break;

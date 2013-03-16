@@ -20,5 +20,23 @@ C41_AN_DECL(c41_s16an_t, int16_t);
 C41_AN_DECL(c41_s32an_t, int32_t);
 C41_AN_DECL(c41_s64an_t, int64_t);
 
+#define C41_VECTOR_DECL(_vec_type, _item_type) \
+  typedef struct _vec_type##_s { _item_type * a; c41_ma_t * ma_p; \
+    size_t n, m; } _vec_type
+
+C41_VECTOR_DECL(c41_u8v_t, uint8_t);
+
+/* c41_u8v_init *************************************************************/
+C41_INLINE c41_u8v_t * c41_u8v_init (c41_u8v_t * v, c41_ma_t * ma_p)
+{
+  v->a = NULL;
+  v->ma_p = ma_p;
+  v->n = v->m = 0;
+  return v;
+}
+
+C41_API uint_t C41_CALL c41_u8v_extend (c41_u8v_t * v, size_t len); // ret. a ma error
+C41_API uint_t C41_CALL c41_u8v_append (c41_u8v_t * v, size_t len);
+
 #endif /* _C41_ARRAY_H_ */
 

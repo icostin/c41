@@ -146,7 +146,11 @@ C41_API size_t C41_CALL c41_io_str_writer
   void * ctx
 );
 
-/* c41_io_fmt ***************************************************************/
+/* c41_io_fmt ***************************************************************
+ * returns number of bytes written or,
+ * on error - the negated error code from c41_write_vfmt()
+ * if -1 (writer error) inspect io_p->error for the i/o error
+ */
 C41_API ssize_t C41_CALL c41_io_fmt (c41_io_t * io_p, char const * fmt, ...);
 
 /* c41_io_p64read ***********************************************************
