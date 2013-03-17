@@ -22,21 +22,46 @@ C41_AN_DECL(c41_s64an_t, int64_t);
 
 #define C41_VECTOR_DECL(_vec_type, _item_type) \
   typedef struct _vec_type##_s { _item_type * a; c41_ma_t * ma_p; \
-    size_t n, m; } _vec_type
+    size_t n, m; uint_t order; uint8_t ma_rc; } _vec_type
 
 C41_VECTOR_DECL(c41_u8v_t, uint8_t);
 
 /* c41_u8v_init *************************************************************/
-C41_INLINE c41_u8v_t * c41_u8v_init (c41_u8v_t * v, c41_ma_t * ma_p)
+C41_INLINE c41_u8v_t * c41_u8v_init (c41_u8v_t * v, c41_ma_t * ma_p, 
+                                     uint8_t order)
 {
   v->a = NULL;
   v->ma_p = ma_p;
   v->n = v->m = 0;
+  v->order = order;
   return v;
 }
 
+/* c41_u8v_extend ***********************************************************
+ * extends the data buffer to have at least len bytes available more than
+ * the current used length.
+ * returns a ma error, or 0 for success
+ */
 C41_API uint_t C41_CALL c41_u8v_extend (c41_u8v_t * v, size_t len); // ret. a ma error
-C41_API uint_t C41_CALL c41_u8v_append (c41_u8v_t * v, size_t len);
+
+/* c41_u8v_append ***********************************************************
+ * increases used length with the given length, or returns NULL if failed;
+ * in case of failure, the actual ma error is stored in v->ma_rc;
+ * on success, returns the pointer to where appended data can be written
+ */
+C41_API uint8_t * C41_CALL c41_u8v_append (c41_u8v_t * v, size_t len);
+
+/* c41_u8v_free *************************************************************
+ * frees the buffer
+ */
+C41_API uint_t C41_CALL c41_u8v_free (c41_u8v_t * v);
+
+/* c41_u8v_opt **************************************************************
+ * if allocated length is bigger than used length, it reallocates to fit
+ * exactly the used data; this is usually the last call after append operations
+ * end;
+ */
+C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v);
 
 #endif /* _C41_ARRAY_H_ */
 
