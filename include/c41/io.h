@@ -17,15 +17,6 @@ typedef struct c41_io_type_s c41_io_type_t;
 #define C41_IO_CLOSED           0x08
 #define C41_IO_BLOCKING         0x10 // reads/writes are blocking; if not set means it's either non-blocking or the blocking state is not known 
 
-struct c41_io_s
-{
-  c41_io_type_t * io_type_p;
-  int64_t size; // cached file size - updated by seek to end
-  int64_t pos; // cached file position - updated by any seek, read, write
-  uint8_t flags;
-  uint8_t error; // last error; successful ops do not change this value
-};
-
 /* anchors */
 #define C41_IO_BEGIN 0
 #define C41_IO_CURRENT 1
@@ -43,6 +34,15 @@ struct c41_io_s
 #define C41_IO_ALREADY_CLOSED   8
 #define C41_IO_PIPE_ERROR       9
 #define C41_IO_WOULD_BLOCK      10 // read/write would block on a file opened in non-blocking more
+
+struct c41_io_s
+{
+  c41_io_type_t * io_type_p;
+  int64_t size; // cached file size - updated by seek to end
+  int64_t pos; // cached file position - updated by any seek, read, write
+  uint8_t flags;
+  uint8_t error; // last error; successful ops do not change this value
+};
 
 struct c41_io_type_s
 {
