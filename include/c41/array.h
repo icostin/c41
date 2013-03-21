@@ -63,5 +63,11 @@ C41_API uint_t C41_CALL c41_u8v_free (c41_u8v_t * v);
  */
 C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v);
 
+/* c41_u8v_afmt *************************************************************
+ * returns error code from c41_write_vfmt()
+ * on writer error check v->ma_rc for mem alloc error
+ */
+C41_API uint_t C41_CALL c41_u8v_afmt (c41_u8v_t * v, char const * fmt, ...);
+
 #endif /* _C41_ARRAY_H_ */
 

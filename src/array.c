@@ -1,3 +1,8 @@
+/* [c41] Array support - header file
+ * Changelog:
+ * - 2013/03/21 Costin Ionescu: added c41_u8v_afmt()
+ */
+
 #include <c41.h>
 
 /* c41_u8v_extend ***********************************************************/
@@ -51,5 +56,38 @@ C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v)
   if (r) return (v->ma_rc = r);
   v->m = v->n;
   return 0;
+}
+
+/* afmt_writer **************************************************************/
+static size_t C41_CALL afmt_writer
+(
+  void * output,
+  uint8_t const * data,
+  size_t len,
+  void * ctx
+)
+{
+  c41_u8v_t * v = output;
+  uint8_t * d;
+
+  (void) ctx;
+  d = c41_u8v_append(v, len);
+  if (!d) return 0;
+  C41_MEM_COPY(d, data, len);
+  return len;
+}
+
+/* c41_u8v_afmt *************************************************************/
+C41_API uint_t C41_CALL c41_u8v_afmt (c41_u8v_t * v, char const * fmt, ...)
+{
+  va_list va;
+  int sc;
+  size_t wlen;
+
+  va_start(va, fmt);
+  sc = c41_write_vfmt(v, afmt_writer, NULL, c41_term_utf8_str_width_swf, NULL,
+                      &wlen, fmt, va);
+  va_end(va);
+  return sc;
 }
 
