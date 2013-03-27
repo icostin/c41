@@ -13,6 +13,7 @@
 #define C41_SMT_NO_CODE         4
 #define C41_SMT_ALLOC_ERROR     5
 #define C41_SMT_INIT_AND_FREE_ERROR 6
+#define C41_SMT_FREE_ERROR      7
 
 typedef struct c41_smt_tid_noimpl_s * c41_smt_tid_t;
 
@@ -211,6 +212,14 @@ C41_INLINE uint_t C41_CALL c41_smt_cond_wait
 C41_API uint_t C41_CALL c41_smt_mutex_create
   (
     c41_smt_mutex_t * * mutex_pp,
+    c41_smt_t * smt_p,
+    c41_ma_t * ma_p
+  );
+
+/* c41_smt_mutex_destroy ****************************************************/
+C41_API uint_t C41_CALL c41_smt_mutex_destroy
+  (
+    c41_smt_mutex_t * mutex_p,
     c41_smt_t * smt_p,
     c41_ma_t * ma_p
   );

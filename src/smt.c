@@ -23,3 +23,21 @@ C41_API uint_t C41_CALL c41_smt_mutex_create
   return smt_rc;
 }
 
+/* c41_smt_mutex_destroy ****************************************************/
+C41_API uint_t C41_CALL c41_smt_mutex_destroy
+(
+  c41_smt_mutex_t * mutex_p,
+  c41_smt_t * smt_p,
+  c41_ma_t * ma_p
+)
+{
+  uint_t ma_rc;
+  uint_t smt_rc;
+
+  smt_rc = c41_smt_mutex_finish(smt_p, mutex_p);
+  if (smt_rc) return smt_rc;
+  ma_rc = c41_ma_free(ma_p, mutex_p, smt_p->mutex_size);
+  if (ma_rc) return C41_SMT_FREE_ERROR;
+  return 0;
+}
+
