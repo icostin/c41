@@ -11,6 +11,8 @@
 #define C41_SMT_OTHER           2 // trylock returns this when mutex locked by some other thread
 #define C41_SMT_NO_RES          3
 #define C41_SMT_NO_CODE         4
+#define C41_SMT_ALLOC_ERROR     5
+#define C41_SMT_INIT_AND_FREE_ERROR 6
 
 typedef struct c41_smt_tid_noimpl_s * c41_smt_tid_t;
 
@@ -204,6 +206,14 @@ C41_INLINE uint_t C41_CALL c41_smt_cond_wait
 {
   return smt_p->cond_wait(smt_p, cond_p, mutex_p);
 }
+
+/* c41_smt_mutex_create *****************************************************/
+C41_API uint_t C41_CALL c41_smt_mutex_create
+  (
+    c41_smt_mutex_t * * mutex_pp,
+    c41_smt_t * smt_p,
+    c41_ma_t * ma_p
+  );
 
 #endif /* _C41_SIMPLE_MULTITHREADING_H_ */
 
