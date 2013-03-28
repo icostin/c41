@@ -224,5 +224,21 @@ C41_API uint_t C41_CALL c41_smt_mutex_destroy
     c41_ma_t * ma_p
   );
 
+/* c41_smt_cond_create ******************************************************/
+C41_API uint_t C41_CALL c41_smt_cond_create
+(
+  c41_smt_cond_t * * cond_pp,
+  c41_smt_t * smt_p,
+  c41_ma_t * ma_p
+);
+
+/* c41_smt_cond_destroy *****************************************************/
+C41_API uint_t C41_CALL c41_smt_cond_destroy
+(
+ c41_smt_cond_t * cond_p,
+  c41_smt_t * smt_p,
+  c41_ma_t * ma_p
+);
+
 #endif /* _C41_SIMPLE_MULTITHREADING_H_ */
 
