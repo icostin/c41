@@ -59,7 +59,7 @@ C41_API uint_t C41_CALL c41_smt_cond_create
   if (smt_rc)
   {
     ma_rc = c41_ma_free(ma_p, *cond_pp, smt_p->cond_size);
-    return C41_SMT_INIT_AND_FREE_ERROR;
+    if (ma_rc) return C41_SMT_INIT_AND_FREE_ERROR;
   }
   return smt_rc;
 }
