@@ -5,6 +5,7 @@
 
 #include <c41.h>
 
+#if 0
 /* c41_u8v_extend ***********************************************************/
 C41_API uint_t C41_CALL c41_u8v_extend (c41_u8v_t * v, size_t len)
 {
@@ -57,6 +58,7 @@ C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v)
   v->m = v->n;
   return 0;
 }
+#endif
 
 /* afmt_writer **************************************************************/
 static size_t C41_CALL afmt_writer

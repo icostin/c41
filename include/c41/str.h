@@ -253,6 +253,11 @@ C41_API int C41_CALL c41_utf8_str_measure
   size_t * wp
 );
 
+#define c41_utf8_validate(_data, _len) \
+  (c41_utf8_str_measure(c41_term_char_width_wctx, NULL, (_data), (_len), \
+                        C41_SSIZE_MAX, C41_SSIZE_MAX, &c41_dummy_size, \
+                        &c41_dummy_size, &c41_dummy_size))
+
 /* c41_write_vfmt ***********************************************************
  * formats a string and writes it (potentially in chunks) to specified output
  * return values:
@@ -307,6 +312,9 @@ C41_API ssize_t c41_sfmt
   char const * fmt,
   ...
 );
+
+static size_t c41_dummy_size = 0;
+static __inline void c41_dummy_fn () { c41_dummy_size = 0; }
 
 #endif /* _C41_STR_H_ */
 

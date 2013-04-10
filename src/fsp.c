@@ -16,7 +16,7 @@ static ssize_t C41_CALL mswin_fsp_from_utf8
   ssize_t n; // number of utf16 units (16-bit ints)
 
   n = c41_utf16_len_from_utf8(utf8_a, utf8_n, NULL);
-  if (n < 0) return C41_FSI_BAD_PATH;
+  if (n < 0) return -C41_FSI_BAD_PATH;
   if ((size_t) (n + n + 2) <= fsp_n)
   {
     c41_utf16_from_utf8((uint16_t *) fsp_a, utf8_a, utf8_n);
@@ -98,6 +98,7 @@ static ssize_t C41_CALL unix_fsp_from_utf8
   (void) fsp_n;
   (void) utf8_a;
   (void) utf8_n;
+  if (c41_utf8_validate(utf8_a, utf8_n)) return -C41_FSI_BAD_PATH;
   if (fsp_n < utf8_n + 1) return utf8_n + 1;
   C41_MEM_COPY(fsp_a, utf8_a, utf8_n);
   fsp_a[utf8_n] = 0;

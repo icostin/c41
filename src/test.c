@@ -212,13 +212,13 @@ int fsp_test ()
   C(z == 10 && !memcmp(buf, "c\0a\0c\0a\0\0\0", 10));
 
   z = fspi.fsp_from_utf8(buf, 2, (uint8_t *) "\xEF\xBB\xBF", 2);
-  C(z == C41_FSI_BAD_PATH);
+  C(z == -C41_FSI_BAD_PATH);
 
   z = fspi.fsp_from_utf8(buf, 4, (uint8_t *) "\xEF\xBB\xBF", 3);
   C(z == 4);
 
   z = fspi.fsp_from_utf8(buf, 6, (uint8_t *) "\xF4\x8F\xBF\xBF", 3);
-  C(z == C41_FSI_BAD_PATH);
+  C(z == -C41_FSI_BAD_PATH);
 
   z = fspi.fsp_from_utf8(buf, 8, (uint8_t *) "\xF4\x8F\xBF\xBF", 4);
   C(z == 6);
