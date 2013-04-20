@@ -28,7 +28,7 @@
   (c41_u8s_compare((uint8_t const *) (_a), (uint8_t const *) (_b)))
 #endif
 
-#define C41_MEM_SCAN_NOLIM(_s, _v) c41_u8a_scan_nolim((_s), (_v))
+#define C41_MEM_SCAN_NOLIM(_s, _v) (c41_u8a_scan_nolim((_s), (_v)))
 
 #define C41_MEM_CMP_LIT(_a, _b) C41_MEM_COMPARE((_a), (_b), sizeof(_b) - 1)
 
