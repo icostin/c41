@@ -1,6 +1,7 @@
 /* [c41] File System Interface - header file
  * Changelog:
  *  - 2013/01/04 Costin Ionescu: initial commit
+ *  - 2013/05/12 Costin Ionescu: added c41_file_save()
  */
 
 #ifndef _C41_FSI_H_
@@ -97,6 +98,19 @@ C41_API uint_t C41_CALL c41_file_destroy
 (
   c41_fsi_t *                   fsi_p,
   c41_io_t *                    io_p
+);
+
+/* c41_file_save ************************************************************/
+C41_API uint_t C41_CALL c41_file_save
+(
+    uint8_t const *             path_utf8_a,
+    size_t                      path_utf8_n,
+    uint32_t                    mode,
+    void *                      data,
+    size_t                      len,
+    c41_fsi_t *                 fsi_p,
+    c41_fspi_t *                fspi_p,
+    c41_ma_t *                  ma_p
 );
 
 #endif /* _C41_FSI_H_ */

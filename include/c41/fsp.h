@@ -1,8 +1,9 @@
 /* [c41] File System Path - header file
  * This provides an interface to convert utf8 strings or some escaped utf8 form into the
  * native representation used by a fsi interface.
- * The escape form should be able to generate any file path valid even if there is no utf8
- * equivalent
+ * The escape form should be able to generate any file path valid even if there
+ * is no utf8 equivalent
+ *
  * Changelog:
  *  - 2013/02/13 Costin Ionescu: initial commit
  */
@@ -19,7 +20,9 @@ typedef struct c41_fspi_s c41_fspi_t;
 
 struct c41_fspi_s
 {
-  /* functions to convert path fill the output only if the function succeeds */
+  /* functions to convert path fill the output only if the function succeeds 
+   * return size can be larger than fsp_n if there's not enough room to store
+   * the translated path and no data is written */
   ssize_t (C41_CALL * fsp_from_utf8)
     (
       uint8_t *                 fsp_a,
