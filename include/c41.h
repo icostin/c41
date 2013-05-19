@@ -28,6 +28,7 @@
 #include "c41/cli.h"
 #include "c41/dlist.h"
 #include "c41/rbtree.h"
+#include "c41/esm.h"
 
 #endif /* _C41_H_ */
 

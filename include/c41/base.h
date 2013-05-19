@@ -18,6 +18,12 @@
 #define C41_IA32 1
 #endif
 
+#if C41_AMD64 || C41_IA32
+#define C41_LITTLE_ENDIAN 1
+#undef C41_BIG_ENDIAN
+#else
+#endif
+
 /* token pasting macros */
 #define C41_P2D(_a, _b) _a ## _b
 #define C41_P2(_a, _b) C41_P2D(_a, _b)
@@ -171,6 +177,8 @@ typedef unsigned long int ulong_t;
 #define C41_ITEM_COUNT(_a) (sizeof(_a) / sizeof((_a)[0]))
 
 #define C41_RU8(_p) (*((uint8_t const *) (_p)))
+
+#define C41_IS_POW2(_x) ((_x) && ((_x) & ((_x) - 1)) == 0)
 
 #endif /* _C41_BASE_H_ */
 

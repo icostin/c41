@@ -17,7 +17,8 @@
 #define C41_STR_COMPARE(_a, _b) \
   (strcmp((char const *) (_a), (char const *) (_b)))
 #else
-#define C41_MEM_COPY(_d, _s, _l) (c41_u8a_copy((uint8_t *) (_d), (_s), (_l)))
+#define C41_MEM_COPY(_d, _s, _l) \
+    (c41_u8a_copy((uint8_t *) (_d), (uint8_t const *) (_s), (_l)))
 #define C41_MEM_MOVE(_d, _s, _l) (c41_u8a_move((uint8_t *) (_d), (_s), (_l)))
 #define C41_MEM_FILL(_d, _l, _v) (c41_u8a_fill((uint8_t *) (_d), (_l), (_v)))
 #define C41_MEM_COMPARE(_a, _b, _l) \
@@ -92,6 +93,18 @@ C41_API size_t C41_CALL c41_u8a_scan_ofs_nolim
   uint8_t const * s,
   uint8_t v
 );
+
+/* c41_bswap16 **************************************************************/
+C41_INLINE uint16_t c41_bswap16 (uint16_t v)
+{
+    return (v << 8) | (v >> 8);
+}
+
+/* c41_bswap32 **************************************************************/
+C41_INLINE uint32_t c41_bswap32 (uint32_t v)
+{
+    return (v >> 24) | ((v >> 8) & 0xFF00) | ((v << 8) & 0xFF0000) | (v << 24);
+}
 
 /* c41_mem_zero *************************************************************/
 #define C41_MEM_ZERO(_d, _l) (C41_MEM_FILL((_d), (_l), 0))

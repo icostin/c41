@@ -5,7 +5,7 @@
 
 set N=c41
 set D=C41
-set CSRC=src\fsi.c src\fsp.c src\ilc.c src\io.c src\ma.c src\misc.c src\pmvops.c src\str.c src\ucw8.c src\rbtree.c src\array.c src\smt.c
+set CSRC=src\fsi.c src\fsp.c src\ilc.c src\io.c src\ma.c src\misc.c src\pmvops.c src\str.c src\ucw8.c src\rbtree.c src\array.c src\smt.c src\esm.c
 set copts=/nologo /WX /W4 /wd4201
 :: 4201 - nameless struct/union
 :: 4668 - warn when replacing undefined MACRO with 0
