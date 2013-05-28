@@ -79,7 +79,7 @@ C41_API void C41_CALL c41_esm_init
     c41_ma_t * ma, // mem allocator
     size_t ez, // element size
     size_t el, // element limit: max number of elements to allocate 
-               // (C41_SSIZE_MAX for no limit)
+               // (C41_SSIZE_MAX - 1 for no limit)
     size_t fn, // how many elements to allocate in the first block
                // this gets doubled up to bl
     size_t bl // block limit: max number of elements in any allocated block

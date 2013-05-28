@@ -25,6 +25,13 @@ C41_AN_DECL(c41_s64an_t, int64_t);
     size_t n, m; uint_t order; uint8_t ma_rc; } _vec_t
 
 C41_VECTOR_DECL(c41_u8v_t, uint8_t);
+C41_VECTOR_DECL(c41_s8v_t, int8_t);
+C41_VECTOR_DECL(c41_u16v_t, uint16_t);
+C41_VECTOR_DECL(c41_s16v_t, int16_t);
+C41_VECTOR_DECL(c41_u32v_t, uint32_t);
+C41_VECTOR_DECL(c41_s32v_t, int32_t);
+C41_VECTOR_DECL(c41_u64v_t, uint64_t);
+C41_VECTOR_DECL(c41_s64v_t, int64_t);
 C41_VECTOR_DECL(c41_pv_t, void *);
 
 #if 0
@@ -83,6 +90,9 @@ C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v);
   C41_INLINE _item_t * _pfx##_append (_vec_t * v, size_t count) \
   { _item_t * p; if (_pfx##_extend(v, count)) return NULL; \
     p = v->a + v->n; v->n += count; return p; } \
+  C41_INLINE ssize_t _pfx##_append_item (_vec_t * vec, _item_t val) \
+  { int marc = _pfx##_extend(vec, 1); if (marc) return -marc; \
+    vec->a[vec->n] = val; return vec->n++; } \
   C41_INLINE uint_t _pfx##_free (_vec_t * v) \
   { uint_t r; if (!v->m) return 0; \
     r = c41_ma_free(v->ma_p, v->a, v->m * sizeof(_item_t)); \
@@ -96,6 +106,13 @@ C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v);
   typedef _vec_t _vec_t##_with_fns_t
 
 C41_VECTOR_FNS(c41_u8v_t, uint8_t, c41_u8v);
+C41_VECTOR_FNS(c41_s8v_t, int8_t, c41_s8v);
+C41_VECTOR_FNS(c41_u16v_t, uint16_t, c41_u16v);
+C41_VECTOR_FNS(c41_s16v_t, int16_t, c41_s16v);
+C41_VECTOR_FNS(c41_u32v_t, uint32_t, c41_u32v);
+C41_VECTOR_FNS(c41_s32v_t, int32_t, c41_s32v);
+C41_VECTOR_FNS(c41_u64v_t, uint64_t, c41_u64v);
+C41_VECTOR_FNS(c41_s64v_t, int64_t, c41_s64v);
 C41_VECTOR_FNS(c41_pv_t, void *, c41_pv);
 
 /* c41_u8v_afmt *************************************************************
