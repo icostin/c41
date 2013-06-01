@@ -81,12 +81,13 @@ C41_API uint_t C41_CALL c41_u8v_opt (c41_u8v_t * v);
     m = v->n + len; \
     if (m < len || m > C41_SSIZE_MAX / sizeof(_item_t)) \
       return C41_MA_LEN_OVERFLOW; \
-    o = (size_t) 1 << v->order; m *= sizeof(_item_t); \
+    o = (size_t) 1 << v->order; \
     if (m >= o) m = (m + o - 1) & (- (ssize_t) o); \
-    else { for (o = 8; o < m; o <<= 1); m = o; } \
-    r = c41_ma_realloc(v->ma_p, (void * *) &v->a, m, v->m * sizeof(_item_t)); \
+    else { for (o = 1; o < m; o <<= 1); m = o; } \
+    r = c41_ma_realloc(v->ma_p, (void * *) &v->a, m * sizeof(_item_t), \
+                       v->m * sizeof(_item_t)); \
     if (r) return (v->ma_rc = (uint8_t) r); \
-    v->m = m / sizeof(_item_t); return 0; } \
+    v->m = m; return 0; } \
   C41_INLINE _item_t * _pfx##_append (_vec_t * v, size_t count) \
   { _item_t * p; if (_pfx##_extend(v, count)) return NULL; \
     p = v->a + v->n; v->n += count; return p; } \
