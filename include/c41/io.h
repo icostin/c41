@@ -153,6 +153,18 @@ C41_API size_t C41_CALL c41_io_str_writer
  */
 C41_API ssize_t C41_CALL c41_io_fmt (c41_io_t * io_p, char const * fmt, ...);
 
+/* c41_io_vfmt **************************************************************
+ * returns number of bytes written or,
+ * on error - the negated error code from c41_write_vfmt()
+ * if -1 (writer error) inspect io_p->error for the i/o error
+ */
+C41_API ssize_t C41_CALL c41_io_vfmt 
+(
+    c41_io_t * io_p, 
+    char const * fmt, 
+    va_list va
+);
+
 /* c41_io_p64read ***********************************************************
  * seeks to given position and reads; seek & read are NOT done atomically
  * will modify the current position

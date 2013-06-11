@@ -200,6 +200,18 @@ C41_API ssize_t C41_CALL c41_io_fmt (c41_io_t * io_p, char const * fmt, ...)
   return sc ? -sc : (ssize_t) wlen;
 }
 
+/* c41_io_vfmt **************************************************************/
+C41_API ssize_t C41_CALL c41_io_vfmt (c41_io_t * io_p, char const * fmt, 
+                                      va_list va)
+{
+  int sc;
+  size_t wlen;
+
+  sc = c41_write_vfmt(io_p, c41_io_str_writer, NULL, 
+                      c41_term_utf8_str_width_swf, NULL, &wlen, fmt, va);
+  return sc ? -sc : (ssize_t) wlen;
+}
+
 /* c41_io_get_size **********************************************************/
 C41_API uint_t C41_CALL c41_io_get_size
 (
