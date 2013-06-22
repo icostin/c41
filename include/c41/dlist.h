@@ -49,6 +49,39 @@ C41_INLINE void c41_dlist_ins
   anchor_p->links[dir] = to_ins_p;
 }
 
+/* c41_dlist_extend *********************************************************/
+C41_INLINE void c41_dlist_extend
+(
+  c41_np_t * dest,
+  c41_np_t * src,
+  int dir
+)
+{
+  int rev = dir ^ 1;
+  c41_np_t * de = dest->links[rev];
+  c41_np_t * sb = src->links[dir];
+  c41_np_t * se = src->links[rev];
+  de->links[dir] = sb;
+  sb->links[rev] = de;
+  se->links[dir] = dest;
+  dest->links[rev] = se;
+}
+
+
+/* c41_dlist_del ************************************************************/
+C41_INLINE void c41_dlist_del
+(
+  c41_np_t * to_del_p
+)
+{
+  c41_np_t * p;
+  c41_np_t * n;
+  n = to_del_p->next;
+  p = to_del_p->prev;
+  n->prev = p;
+  p->next = n;
+}
+
 /* C41_DLIST_APPEND *********************************************************/
 #define C41_DLIST_APPEND(_list, _obj_p, _np_field) \
   (c41_dlist_ins(&(_list), &(_obj_p)->_np_field, C41_PREV))
