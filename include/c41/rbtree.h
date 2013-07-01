@@ -107,5 +107,15 @@ C41_API c41_rbtree_node_t * C41_CALL c41_rbtree_np
   uint8_t side
 );
 
+/* c41_rbtree_last_payload **************************************************/
+C41_INLINE void * c41_rbtree_last_payload
+(
+  c41_rbtree_path_t * path_p
+)
+{
+  return path_p->nodes[path_p->last] + 1;
+}
+
+
 #endif /* _C41_RED_BLACK_TREE_H_ */
 
