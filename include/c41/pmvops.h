@@ -94,18 +94,6 @@ C41_API size_t C41_CALL c41_u8a_scan_ofs_nolim
   uint8_t v
 );
 
-/* c41_bswap16 **************************************************************/
-C41_INLINE uint16_t c41_bswap16 (uint16_t v)
-{
-    return (v << 8) | (v >> 8);
-}
-
-/* c41_bswap32 **************************************************************/
-C41_INLINE uint32_t c41_bswap32 (uint32_t v)
-{
-    return (v >> 24) | ((v >> 8) & 0xFF00) | ((v << 8) & 0xFF0000) | (v << 24);
-}
-
 /* c41_mem_zero *************************************************************/
 #define C41_MEM_ZERO(_d, _l) (C41_MEM_FILL((_d), (_l), 0))
 
@@ -126,6 +114,68 @@ C41_INLINE uint32_t c41_bswap32 (uint32_t v)
 
 /* C41_VAR_MINUS_ONE ********************************************************/
 #define C41_VAR_MINUS_ONE(_v) C41_MEM_MINUS_ONE(&(_v), sizeof(_v))
+
+#define C41_RU8(_p) (*((uint8_t const *) (_p)))
+
+/* c41_read_u16le ***********************************************************/
+C41_INLINE uint16_t c41_read_u16le (void * p)
+{
+    uint8_t const * b = p;
+    return b[0] | ((uint16_t) b[1] << 8);
+}
+#define c41_read_s16le(_p) ((int16_t) c41_read_u16le((_p)))
+
+/* c41_read_u16be ***********************************************************/
+C41_INLINE uint16_t c41_read_u16be (void * p)
+{
+    uint8_t const * b = p;
+    return b[1] | ((uint16_t) b[0] << 8);
+}
+#define c41_read_s16be(_p) ((int16_t) c41_read_u16be((_p)))
+
+/* c41_read_u32le ***********************************************************/
+C41_INLINE uint32_t c41_read_u32le (void * p)
+{
+    uint8_t const * b = p;
+    return b[0] | ((uint32_t) b[1] << 8) 
+            | ((uint32_t) b[2] << 16) | ((uint32_t) b[3] << 24);
+}
+#define c41_read_s32le(_p) ((int32_t) c41_read_u32le((_p)))
+
+/* c41_read_u32be ***********************************************************/
+C41_INLINE uint32_t c41_read_u32be (void * p)
+{
+    uint8_t const * b = p;
+    return b[3] | ((uint32_t) b[2] << 8) 
+            | ((uint32_t) b[1] << 16) | ((uint32_t) b[0] << 24);
+}
+#define c41_read_s32be(_p) ((int32_t) c41_read_u32be((_p)))
+
+/* c41_bswap16 **************************************************************/
+C41_INLINE uint16_t c41_bswap16 (uint16_t v)
+{
+    return (v << 8) | (v >> 8);
+}
+
+/* c41_bswap32 **************************************************************/
+C41_INLINE uint32_t c41_bswap32 (uint32_t v)
+{
+    return (v >> 24) | ((v >> 8) & 0xFF00) | ((v << 8) & 0xFF0000) | (v << 24);
+}
+
+/* c41_bswap16_array ********************************************************/
+C41_INLINE void c41_bswap16_array (void * p, size_t count)
+{
+    uint16_t * a = p;
+    while (count--) { *a = c41_bswap16(*a); ++a; }
+}
+
+/* c41_bswap32_array ********************************************************/
+C41_INLINE void c41_bswap32_array (void * p, size_t count)
+{
+    uint32_t * a = p;
+    while (count--) { *a = c41_bswap32(*a); ++a; }
+}
 
 #endif /* _C41_PMV_OPS_H_ */
 

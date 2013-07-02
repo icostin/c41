@@ -176,8 +176,6 @@ typedef unsigned long int ulong_t;
 
 #define C41_ITEM_COUNT(_a) (sizeof(_a) / sizeof((_a)[0]))
 
-#define C41_RU8(_p) (*((uint8_t const *) (_p)))
-
 #define C41_IS_POW2(_x) ((_x) && ((_x) & ((_x) - 1)) == 0)
 
 #endif /* _C41_BASE_H_ */
