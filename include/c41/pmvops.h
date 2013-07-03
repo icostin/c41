@@ -118,7 +118,7 @@ C41_API size_t C41_CALL c41_u8a_scan_ofs_nolim
 #define C41_RU8(_p) (*((uint8_t const *) (_p)))
 
 /* c41_read_u16le ***********************************************************/
-C41_INLINE uint16_t c41_read_u16le (void * p)
+C41_INLINE uint16_t c41_read_u16le (void const * p)
 {
     uint8_t const * b = p;
     return b[0] | ((uint16_t) b[1] << 8);
@@ -126,7 +126,7 @@ C41_INLINE uint16_t c41_read_u16le (void * p)
 #define c41_read_s16le(_p) ((int16_t) c41_read_u16le((_p)))
 
 /* c41_read_u16be ***********************************************************/
-C41_INLINE uint16_t c41_read_u16be (void * p)
+C41_INLINE uint16_t c41_read_u16be (void const * p)
 {
     uint8_t const * b = p;
     return b[1] | ((uint16_t) b[0] << 8);
@@ -134,7 +134,7 @@ C41_INLINE uint16_t c41_read_u16be (void * p)
 #define c41_read_s16be(_p) ((int16_t) c41_read_u16be((_p)))
 
 /* c41_read_u32le ***********************************************************/
-C41_INLINE uint32_t c41_read_u32le (void * p)
+C41_INLINE uint32_t c41_read_u32le (void const * p)
 {
     uint8_t const * b = p;
     return b[0] | ((uint32_t) b[1] << 8) 
@@ -143,13 +143,26 @@ C41_INLINE uint32_t c41_read_u32le (void * p)
 #define c41_read_s32le(_p) ((int32_t) c41_read_u32le((_p)))
 
 /* c41_read_u32be ***********************************************************/
-C41_INLINE uint32_t c41_read_u32be (void * p)
+C41_INLINE uint32_t c41_read_u32be (void const * p)
 {
     uint8_t const * b = p;
     return b[3] | ((uint32_t) b[2] << 8) 
             | ((uint32_t) b[1] << 16) | ((uint32_t) b[0] << 24);
 }
 #define c41_read_s32be(_p) ((int32_t) c41_read_u32be((_p)))
+
+/* c41_read_u32be_array *****************************************************/
+C41_INLINE void c41_read_u32be_array 
+(
+    uint32_t * dest,
+    void const * src,
+    size_t count
+)
+{
+    uint8_t const * b = src;
+    uint8_t const * e = b + count * 4;
+    for (; b < e; b += 4) *dest++ = c41_read_u32be(b);
+}
 
 /* c41_bswap16 **************************************************************/
 C41_INLINE uint16_t c41_bswap16 (uint16_t v)
