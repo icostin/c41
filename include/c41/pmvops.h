@@ -171,6 +171,19 @@ C41_INLINE uint64_t c41_read_u64be (void const * p)
         | ((uint64_t) b[1] << 0x30) | ((uint64_t) b[0] << 0x38);
 }
 
+/* c41_read_u16be_array *****************************************************/
+C41_INLINE void c41_read_u16be_array 
+(
+    uint16_t * dest,
+    void const * src,
+    size_t count
+)
+{
+    uint8_t const * b = src;
+    uint8_t const * e = b + count * 2;
+    for (; b < e; b += 2) *dest++ = c41_read_u16be(b);
+}
+
 /* c41_read_u32be_array *****************************************************/
 C41_INLINE void c41_read_u32be_array 
 (
