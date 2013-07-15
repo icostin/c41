@@ -151,6 +151,26 @@ C41_INLINE uint32_t c41_read_u32be (void const * p)
 }
 #define c41_read_s32be(_p) ((int32_t) c41_read_u32be((_p)))
 
+/* c41_read_u64le ***********************************************************/
+C41_INLINE uint64_t c41_read_u64le (void const * p)
+{
+    uint8_t const * b = p;
+    return b[0] | ((uint64_t) b[1] << 0x08) 
+        | ((uint64_t) b[2] << 0x10) | ((uint64_t) b[3] << 0x18) 
+        | ((uint64_t) b[4] << 0x20) | ((uint64_t) b[5] << 0x28)
+        | ((uint64_t) b[6] << 0x30) | ((uint64_t) b[7] << 0x38);
+}
+
+/* c41_read_u64be ***********************************************************/
+C41_INLINE uint64_t c41_read_u64be (void const * p)
+{
+    uint8_t const * b = p;
+    return b[7] | ((uint64_t) b[6] << 0x08) 
+        | ((uint64_t) b[5] << 0x10) | ((uint64_t) b[4] << 0x18) 
+        | ((uint64_t) b[3] << 0x20) | ((uint64_t) b[2] << 0x28)
+        | ((uint64_t) b[1] << 0x30) | ((uint64_t) b[0] << 0x38);
+}
+
 /* c41_read_u32be_array *****************************************************/
 C41_INLINE void c41_read_u32be_array 
 (
@@ -162,6 +182,19 @@ C41_INLINE void c41_read_u32be_array
     uint8_t const * b = src;
     uint8_t const * e = b + count * 4;
     for (; b < e; b += 4) *dest++ = c41_read_u32be(b);
+}
+
+/* c41_read_u64be_array *****************************************************/
+C41_INLINE void c41_read_u64be_array 
+(
+    uint64_t * dest,
+    void const * src,
+    size_t count
+)
+{
+    uint8_t const * b = src;
+    uint8_t const * e = b + count * 8;
+    for (; b < e; b += 8) *dest++ = c41_read_u64be(b);
 }
 
 /* c41_bswap16 **************************************************************/
