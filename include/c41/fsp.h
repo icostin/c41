@@ -13,10 +13,10 @@
 
 typedef struct c41_fspi_s c41_fspi_t;
 
-// _bAB - byte 0xAB (unix)
-// _xAB - unicode char 0xAB (win)
-// _wABCD - unicode char 0xABCD (win)
-// _uABCDEF - unicode char 0xABCDEF
+// @bAB - byte 0xAB (unix)
+// @xAB - unicode char 0xAB (win)
+// @wABCD - unicode char 0xABCD (win)
+// @uABCDEF - unicode char 0xABCDEF
 
 struct c41_fspi_s
 {

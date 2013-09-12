@@ -1,7 +1,8 @@
 /* [c41] File System Interface - header file
  * Changelog:
  *  - 2013/01/04 Costin Ionescu: initial commit
- *  - 2013/05/12 Costin Ionescu: added c41_file_save()
+ *  - 2013/05/12 Costin Ionescu: added c41_file_save_u8p()
+ *  - 2013/09/12 Costin Ionescu: added c41_file_load_u8p()
  */
 
 #ifndef _C41_FSI_H_
@@ -17,6 +18,10 @@
 #define C41_FSI_BAD_PATH        0x04 // path name invalid
 #define C41_FSI_OPEN_FAILED     0x05 // generic error when open fails
 #define C41_FSI_NO_RES          0x06
+#define C41_FSI_IO_SEEK         0x07
+#define C41_FSI_IO_READ         0x08
+#define C41_FSI_IO_WRITE        0x09
+#define C41_FSI_FREE_ERROR      0xFD
 #define C41_FSI_NO_CODE         0xFE
 
 /* open mode flags */
@@ -83,16 +88,6 @@ struct c41_fsi_s
 
 C41_API char const * c41_fsi_status_name (uint_t sc);
 
-/* c41_file_open ************************************************************/
-C41_API uint_t C41_CALL c41_file_open
-(
-  c41_fsi_t *                   fsi_p,
-  c41_io_t * *                  io_pp,
-  uint8_t const *               path_a,
-  size_t                        path_n,
-  uint32_t                      mode
-);
-
 /* c41_file_destroy *********************************************************/
 C41_API uint_t C41_CALL c41_file_destroy
 (
@@ -100,17 +95,57 @@ C41_API uint_t C41_CALL c41_file_destroy
   c41_io_t *                    io_p
 );
 
-/* c41_file_save ************************************************************/
-C41_API uint_t C41_CALL c41_file_save
+/* c41_file_open ************************************************************/
+/**
+ * Opens a file.
+ * The path is given in a host-specific format. You can obtain this format
+ * from fspi conversion functions
+ *
+ */
+C41_API uint_t C41_CALL c41_file_open_fsp
+(
+    uint8_t const *               path_a, 
+    size_t                        path_n, // if < 0 then strlen(path_a)
+    uint32_t                      mode,
+    c41_fsi_t *                   fsi_p,
+    c41_io_t * *                  io_pp
+);
+
+/* c41_file_open_u8p ********************************************************/
+C41_API uint_t C41_CALL c41_file_open_u8p
+(
+    uint8_t const *             utf8_path_a, 
+    ssize_t                     utf8_path_n, // if < 0 then strlen(path_a)
+    uint32_t                    mode,
+    c41_fspi_t *                fspi_p,
+    c41_fsi_t *                 fsi_p,
+    c41_ma_t *                  ma_p,
+    c41_io_t * *                io_pp
+);
+
+/* c41_file_save_u8p ********************************************************/
+C41_API uint_t C41_CALL c41_file_save_u8p
 (
     uint8_t const *             path_utf8_a,
     size_t                      path_utf8_n,
     uint32_t                    mode,
-    void *                      data,
-    size_t                      len,
     c41_fsi_t *                 fsi_p,
     c41_fspi_t *                fspi_p,
-    c41_ma_t *                  ma_p
+    c41_ma_t *                  ma_p,
+    void *                      data,
+    size_t                      len
+);
+
+/* c41_file_load_u8p ********************************************************/
+C41_API uint_t C41_CALL c41_file_load_u8p
+(
+    uint8_t const *             utf8_path_a, 
+    ssize_t                     utf8_path_n, // if < 0 then strlen(path_a)
+    c41_fspi_t *                fspi_p,
+    c41_fsi_t *                 fsi_p,
+    c41_ma_t *                  ma_p,
+    uint8_t * *                 data_p,
+    size_t *                    size_p
 );
 
 #endif /* _C41_FSI_H_ */

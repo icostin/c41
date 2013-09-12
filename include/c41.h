@@ -23,12 +23,12 @@
 #include "c41/str.h"
 #include "c41/io.h"
 #include "c41/ilc.h"
-#include "c41/fsp.h"
-#include "c41/fsi.h"
-#include "c41/cli.h"
 #include "c41/dlist.h"
 #include "c41/rbtree.h"
 #include "c41/esm.h"
+#include "c41/fsp.h"
+#include "c41/fsi.h"
+#include "c41/cli.h"
 
 #endif /* _C41_H_ */
 
