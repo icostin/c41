@@ -184,8 +184,10 @@ C41_API uint_t C41_CALL c41_file_load_u8p
         mae = c41_ma_alloc(ma_p, (void * *) data_p, size);
         if (mae) { e = C41_FSI_NO_RES; break; }
         
-        ioe = c41_io_read_igs(io_p, data_p, size, size_p);
+        ioe = c41_io_read_igs(io_p, *data_p, size, size_p);
         if (ioe) { e = C41_FSI_IO_READ; break; }
+        
+        if (size != *size_p) { e = C41_FSI_IO_READ; break; }
     }
     while (0);
 
