@@ -1,5 +1,7 @@
-c41: Common C Code Collection
+c41: Common C Code Collection -- OBSOLETE
 ===
+
+c42 is the replacement for c41.
 
 This is a freestanding library implementing various utility functions commonly
 used in most programs (for example: string manipulation).
